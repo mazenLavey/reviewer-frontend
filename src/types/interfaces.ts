@@ -19,23 +19,29 @@ export interface RegisterNewUserType extends Pick<UserType, 'userName' | 'userEm
 
 export interface CommentType {
     readonly createdAt: string,
-    authorEmail: string,
-    commentContent: string,
+    authorId: string,
+    content: string,
 }
 
-export interface NewCommentType extends Pick<CommentType, 'authorEmail' | 'commentContent'> { }
+export interface NewCommentType extends Pick<CommentType, 'content'> {
+    postId: string,
+}
+
+export interface LikeType {
+    authorId: string,
+}
 
 export interface PostType {
-    readonly id?: string,
+    readonly _id?: string,
     readonly createdAt?: string,
     readonly updatedAt?: string,
     postTitle: string,
     postSummary: string,
-    mediaFiles: [],
+    mediaFiles: string[],
     postContent: string,
-    author: [],
-    likes: string,
-    comments: string[]
+    author: string,
+    likes: LikeType[],
+    comments: NewCommentType[]
 }
 
 export interface NewPostType extends Pick<PostType,

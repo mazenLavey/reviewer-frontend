@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -13,10 +14,17 @@ import { RegisterNewUserType } from 'types/interfaces';
 import { RegisterSchema } from 'schema/RegisterSchema';
 import { toastNotifications } from 'components/Toastify';
 import { register } from 'api';
-
+import { useSignIn } from 'react-auth-kit'
+import { useNavigate } from 'react-router-dom';
+import LoadingBackDrop from 'components/LoadingBackDrop';
+import routes from 'routes';
 
 const RegisterForm: React.FC = () => {
     const [showPassword, toggle] = useToggle(false);
+    const [isLoading, setLoading] = useState<boolean>(false);
+
+    const signIn = useSignIn();
+    const navigate = useNavigate();
 
     const { values, handleChange, handleSubmit, handleBlur, errors, touched } = useFormik<RegisterNewUserType>({
         initialValues: {
@@ -28,7 +36,11 @@ const RegisterForm: React.FC = () => {
         validationSchema: RegisterSchema,
         onSubmit: async (values, actions) => {
             try {
+                setLoading(true);
                 const response = await register(values);
+
+                navigate(`/${routes.login}`);
+                setLoading(false)
                 toastNotifications.success("Account created successfully!");
 
             } catch (error: any) {
@@ -43,91 +55,94 @@ const RegisterForm: React.FC = () => {
     const confirmPasswordIsError = !!errors.confirmPassword && !!touched.confirmPassword;
 
     return (
-        <form onSubmit={handleSubmit}>
-            <TextField
-                variant="outlined"
-                id="userName"
-                name="userName"
-                label="Your Name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.userName}
-                error={nameIsError}
-            />
-            {nameIsError && <p>{errors.userName}</p>}
-
-            <TextField
-                variant="outlined"
-                id="userEmail"
-                name="userEmail"
-                label="Your Email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.userEmail}
-                error={emailIsError}
-            />
-            {emailIsError && <p>{errors.userEmail}</p>}
-
-            <FormControl variant="outlined">
-                <InputLabel htmlFor="userPassword">Your Password</InputLabel>
-                <OutlinedInput
-                    id="userPassword"
-                    name="userPassword"
+        <>
+            <form onSubmit={handleSubmit}>
+                <TextField
+                    variant="outlined"
+                    id="userName"
+                    name="userName"
+                    label="Your Name"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.userPassword}
-                    error={passwordIsError}
-                    type={showPassword ? 'text' : 'password'}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={toggle}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                    label="Your Password"
+                    value={values.userName}
+                    error={nameIsError}
                 />
-            </FormControl>
-            {passwordIsError && <p>{errors.userPassword}</p>}
+                {nameIsError && <p>{errors.userName}</p>}
 
-            <FormControl variant="outlined">
-                <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
-                <OutlinedInput
-                    id="confirmPassword"
-                    name="confirmPassword"
+                <TextField
+                    variant="outlined"
+                    id="userEmail"
+                    name="userEmail"
+                    label="Your Email"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.confirmPassword}
-                    error={confirmPasswordIsError}
-                    type={showPassword ? 'text' : 'password'}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={toggle}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                    label="Your Password"
+                    value={values.userEmail}
+                    error={emailIsError}
                 />
-            </FormControl>
-            {confirmPasswordIsError && <p>{errors.confirmPassword}</p>}
+                {emailIsError && <p>{errors.userEmail}</p>}
 
-            <Button
-                variant="contained"
-                type='submit'
-                fullWidth
-            >
-                log&nbsp;in
-            </Button>
-        </form >
+                <FormControl variant="outlined">
+                    <InputLabel htmlFor="userPassword">Your Password</InputLabel>
+                    <OutlinedInput
+                        id="userPassword"
+                        name="userPassword"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.userPassword}
+                        error={passwordIsError}
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={toggle}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                        label="Your Password"
+                    />
+                </FormControl>
+                {passwordIsError && <p>{errors.userPassword}</p>}
+
+                <FormControl variant="outlined">
+                    <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
+                    <OutlinedInput
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.confirmPassword}
+                        error={confirmPasswordIsError}
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={toggle}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                        label="Your Password"
+                    />
+                </FormControl>
+                {confirmPasswordIsError && <p>{errors.confirmPassword}</p>}
+
+                <Button
+                    variant="contained"
+                    type='submit'
+                    fullWidth
+                >
+                    register
+                </Button>
+            </form >
+            <LoadingBackDrop isActive={isLoading} />
+        </>
     )
 }
 

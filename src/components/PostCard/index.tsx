@@ -1,20 +1,32 @@
-
-
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import CommentIcon from '@mui/icons-material/Comment';
 
-const ItemCard: React.FC = () => {
+import CommentIcon from '@mui/icons-material/Comment';
+import { PostType } from 'types/interfaces';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+import routes from 'routes';
+import LikeBtn from 'components/LikeBtn';
+
+type Props = {
+    postData: PostType,
+}
+
+const PostCard: React.FC<Props> = ({ postData }) => {
+    const navigate = useNavigate();
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        navigate(`${routes.review}/${postData._id}`)
+    }
+
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardHeader
@@ -28,32 +40,34 @@ const ItemCard: React.FC = () => {
                         {/* <MoreVertIcon /> */}
                     </IconButton>
                 }
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
+                title={postData.postTitle}
+                subheader={postData.createdAt}
             />
             <CardMedia
                 component="img"
                 height="194"
-                image="https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141353.jpg"
+                image={postData?.mediaFiles[0]}
                 alt="Paella dish"
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the mussels,
-                    if you like.
+                    {postData.postSummary}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
+                <LikeBtn postData={postData} />
                 <IconButton aria-label="share">
                     <CommentIcon />
                 </IconButton>
+                <Button
+                    variant="outlined"
+                    onClick={handleClick}
+                >
+                    read more
+                </Button>
             </CardActions>
         </Card>
     )
 }
 
-export default ItemCard;
+export default PostCard;

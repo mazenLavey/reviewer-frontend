@@ -13,11 +13,11 @@ import { useToggle } from 'react-use';
 import { LogInUserType } from 'types/interfaces';
 import { logInSchema } from 'schema/logInSchema';
 import { toastNotifications } from 'components/Toastify';
-import { useSignIn } from 'react-auth-kit'
 import { logIn } from 'api';
+import { useSignIn } from 'react-auth-kit'
 import { useNavigate } from 'react-router-dom';
-import routes from 'routes';
 import LoadingBackDrop from 'components/LoadingBackDrop';
+import routes from 'routes';
 
 const LogInForm: React.FC = () => {
     const [showPassword, toggle] = useToggle(false);
@@ -54,6 +54,7 @@ const LogInForm: React.FC = () => {
                 toastNotifications.success(data.message)
             } catch (error: any) {
                 toastNotifications.error(error.message)
+                setLoading(false)
             }
         },
     });

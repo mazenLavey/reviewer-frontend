@@ -35,14 +35,15 @@ const NewPost: React.FC = () => {
                 const response = await newPost(data);
                 setLoading(false)
                 toastNotifications.success("Post created successfully!");
-
+                
             } catch (error: any) {
+                setLoading(false)
                 toastNotifications.error(error.message)
             }
         },
     });
 
-    const renderImages = values?.mediaFiles?.map((file: File) => {
+    const renderImages = values?.mediaFiles?.map((file: any) => {
         return (
             <img key={file.name} src={URL.createObjectURL(file)} alt={file.name} />
         )

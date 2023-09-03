@@ -4,7 +4,7 @@ import Home from 'pages/Home';
 import Admin from 'pages/Admin';
 import Profile from 'pages/Profile';
 import Review from 'pages/Review';
-import ReviewedItem from 'pages/Review/ReviewedItem';
+import ReviewedPost from 'pages/Review/ReviewedPost';
 import LogIn from 'pages/LogIn';
 import Register from 'pages/Register';
 import NewPost from 'pages/NewPost';
@@ -21,14 +21,18 @@ const App: React.FC = () => {
         <Route path={routes.admin} element={<Admin />} />
         <Route path={routes.login} element={<LogIn />} />
         <Route path={routes.register} element={<Register />} />
-        <Route path={routes.profile} element={<Profile />} />
+        <Route path={routes.profile} element={
+          <ProtectedRoute >
+            <Profile />
+          </ProtectedRoute>
+        } />
         <Route path={routes.newPost} element={
           <ProtectedRoute >
             <NewPost />
           </ProtectedRoute>
         } />
         <Route path={routes.review} element={<Review />}>
-          <Route path=':id' element={<ReviewedItem />} />
+          <Route path=':id' element={<ReviewedPost />} />
         </Route>
         <Route path='*' element={<Navigate to={routes.home} replace />} />
       </Route>
