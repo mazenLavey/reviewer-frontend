@@ -1,30 +1,58 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 import { PostType } from 'types/interfaces';
-import { addLike, deleteLike, deleteComment } from 'api/index';
+import { addLike, deleteLike } from 'api/index';
 
 type Props = {
     postData: PostType,
 }
 
 const LikeBtn: React.FC<Props> = ({ postData }) => {
+    const isLiked = postData?.likes?.find(likeId => likeId === postData.author._id);
 
-    const handleClick = async () => {
-        const isliked = Boolean(postData.likes.find(like => like.authorId === postData.author));
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
 
-        if(!isliked) {
-            try {
-                const response = await deleteComment("64f48534fabb517133c06dfd");
-            } catch(err: any) {
-                console.log(err.message)
+        if (isLiked) {
+            decrementLike(postData._id)
+        } else {
+            incrementLike(postData._id)
+        }
+    }
+
+    const incrementLike = async (postId: string) => {
+        try {
+            const data = {
+                postId,
             }
+
+            const response = await addLike(data);
+
+        } catch (err: any) {
+            console.log(err.message)
+        }
+    }
+
+    const decrementLike = async (postId: string) => {
+        try {
+
+            const response = await deleteLike(postId);
+
+        } catch (err: any) {
+            console.log(err.message)
         }
     }
 
     return (
-        <IconButton aria-label="add to favorites" onClick={handleClick}>
-            <FavoriteIcon />
-        </IconButton>
+        <span>
+            {postData.likes.length}
+            <IconButton
+                aria-label="add to favorites"
+                onClick={handleClick}
+            >
+                <FavoriteIcon sx={isLiked ? { color: "red" } : {}} />
+            </IconButton>
+        </span>
     )
 }
 

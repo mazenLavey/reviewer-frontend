@@ -1,72 +1,86 @@
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-
-import CommentIcon from '@mui/icons-material/Comment';
+import { Stack, Badge, Chip, Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
+import PostCardAuthor from './PostCardAuthor';
+import PostCardActions from './PostCardActions';
+import { format } from 'date-fns';
+import CircularRatingBar from 'components/CircularRatingBar';
 import { PostType } from 'types/interfaces';
-import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
-import routes from 'routes';
-import LikeBtn from 'components/LikeBtn';
 
 type Props = {
     postData: PostType,
 }
 
 const PostCard: React.FC<Props> = ({ postData }) => {
-    const navigate = useNavigate();
+    const formattedDate = format(new Date(postData.createdAt), 'dd MMM yyyy');
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-        navigate(`${routes.review}/${postData._id}`)
-    }
+    const renderTags = postData?.postTags?.split(' ').map((el, index) => {
+        return (
+            <Chip key={index} label={el} size='small' />
+        )
+    })
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
-            <CardHeader
-                avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
-                    </Avatar>
-                }
-                action={
-                    <IconButton aria-label="settings">
-                        {/* <MoreVertIcon /> */}
-                    </IconButton>
-                }
-                title={postData.postTitle}
-                subheader={postData.createdAt}
-            />
-            <CardMedia
-                component="img"
-                height="194"
-                image={postData?.mediaFiles[0]}
-                alt="Paella dish"
-            />
+        <Card sx={{
+            borderRadius: "20px"
+        }}>
+            <Box
+                sx={{ position: "relative" }}
+            >
+                <CardMedia
+                    component="img"
+                    image={postData.mediaFiles[0]}
+                    alt={postData.postTitle}
+                    height="345"
+                />
+
+                <PostCardAuthor
+                    createdAt={postData.createdAt}
+                    author={postData.author.userName}
+                />
+            </Box>
+
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    {postData.postSummary}
-                </Typography>
+
+                    <Stack
+                        direction={"row"}
+                        sx={{
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Typography
+                            variant="h5"
+                            component="h2"
+                        >
+                            {postData.postTitle}
+
+                        </Typography>
+
+
+                        <CircularRatingBar
+                            value={+postData.postRate}
+                            minValue={1}
+                            maxValue={10}
+                        />
+                    </Stack>
+                    <Chip label={postData?.postGroup}/>
+
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                    >
+                        {formattedDate}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        {postData.postSummary}
+                    </Typography>
+
+                    <Stack direction={"row"} spacing={1}>
+                        {renderTags}
+                    </Stack>
+
+                    <PostCardActions postData={postData} />
             </CardContent>
-            <CardActions disableSpacing>
-                <LikeBtn postData={postData} />
-                <IconButton aria-label="share">
-                    <CommentIcon />
-                </IconButton>
-                <Button
-                    variant="outlined"
-                    onClick={handleClick}
-                >
-                    read more
-                </Button>
-            </CardActions>
-        </Card>
+        </Card >
     )
 }
 

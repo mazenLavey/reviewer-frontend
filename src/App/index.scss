@@ -27,10 +27,6 @@ img {
     display: block;
 }
 
-li {
-    list-style: none;
-}
-
 a {
     text-decoration: none;
     color: unset;
@@ -94,44 +90,5 @@ fieldset {
     100% {
         opacity: 1;
         transform: scale(1);
-    }
-}
-
-/* container */
-.container {
-    width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-@media (max-width: 575px) {
-    .container {
-        width: 100%;
-    }
-}
-
-@media (min-width: 576px) {
-    .container {
-        max-width: 540px;
-    }
-}
-
-@media (min-width: 768px) {
-    .container {
-        max-width: 720px;
-    }
-}
-
-@media (min-width: 992px) {
-    .container {
-        max-width: 960px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        max-width: 1140px;
     }
 }

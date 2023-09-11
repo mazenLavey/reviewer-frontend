@@ -27,20 +27,31 @@ export interface NewCommentType extends Pick<CommentType, 'content'> {
     postId: string,
 }
 
-export interface LikeType {
-    authorId: string,
-}
+export type PostGroupType =
+    | "games"
+    | "movies"
+    | "music"
+    | "books"
+    | "sports"
+    | "technology"
+    | "food";
 
 export interface PostType {
-    readonly _id?: string,
-    readonly createdAt?: string,
-    readonly updatedAt?: string,
+    readonly _id: string,
+    readonly createdAt: string,
+    readonly updatedAt: string,
     postTitle: string,
     postSummary: string,
     mediaFiles: string[],
     postContent: string,
-    author: string,
-    likes: LikeType[],
+    postGroup: PostGroupType,
+    postTags: string,
+    postRate: number,
+    author: {
+        userName: string,
+        readonly _id: string
+    },
+    likes: string[],
     comments: NewCommentType[]
 }
 
@@ -49,5 +60,9 @@ export interface NewPostType extends Pick<PostType,
     | "postSummary"
     | "mediaFiles"
     | "postContent"
-> { }
+    | "postGroup"
+    | "postRate"
+> { 
+    postTags: string[]
+}
 

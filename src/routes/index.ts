@@ -12,12 +12,12 @@ type RoutesType = {
 
 const route: RoutesType = {
     home: '/',
-    admin: 'admin',
-    login: 'login',
-    register: 'register',
-    profile: 'profile',
-    newPost: 'new_post',
-    review: 'review',
+    admin: '/admin',
+    login: '/login',
+    register: '/register',
+    profile: '/profile',
+    newPost: '/new_post',
+    review: '/review/:id',
 }
 
 export default route;

@@ -1,11 +1,11 @@
-
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToMarkdown from 'draftjs-to-markdown';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './index.scss';
 
 const toolbarOptions = {
-    options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'history', 'emoji'],
+    options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'history'],
 };
 
 type Props = {
@@ -20,16 +20,18 @@ const TextEditor: React.FC<Props> = ({
 
     const onEditorStateChange = (newEditorState: EditorState) => {
         const stringMarkdown = draftToMarkdown(convertToRaw(newEditorState.getCurrentContent()));
+
         setFieldValue(field, stringMarkdown);
     };
 
     return (
         <Editor
-            wrapperClassName="textEditor__wrapper"
-            editorClassName="textEditor__editor"
-            toolbarClassName='textEditor__toolbar'
+            wrapperClassName="TextEditor__wrapper"
+            editorClassName="TextEditor__editor"
+            toolbarClassName='TextEditor__toolbar'
             onEditorStateChange={onEditorStateChange}
             toolbar={toolbarOptions}
+            placeholder='Write Your Review Here ...'
         />
     )
 }

@@ -1,0 +1,29 @@
+.NewPost__images-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    min-height: 250px;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid rgba(128, 128, 128, 0.507);
+    border-radius: 32px;
+}
+
+.ImagesPreview__delete-icon {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    color: red;
+    font-size: 24px;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.5;
+    }
+}
+
+.ImagesPreview__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 16px;
+}

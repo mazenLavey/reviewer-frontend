@@ -1,11 +1,17 @@
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import classNames from 'classnames';
+import './index.scss';
 
 type Props = {
     setFieldValue: (field: string, value: any) => void
 }
 
-const MyDropzone: React.FC<Props> = ({ setFieldValue }) => {
+const Dropzone: React.FC<Props> = ({
+    setFieldValue
+}) => {
+
     const onDrop = useCallback((acceptedFiles: any) => {
         setFieldValue("mediaFiles", acceptedFiles)
     }, []);
@@ -13,11 +19,23 @@ const MyDropzone: React.FC<Props> = ({ setFieldValue }) => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
     return (
-        <div {...getRootProps()}>
+        <div
+            className={classNames({
+                'Dropzone': true,
+                'Dropzone--active': isDragActive,
+            })}
+            {...getRootProps()}
+        >
             <input {...getInputProps()} />
+            <CloudUploadIcon
+                sx={{
+                    color: "gray",
+                    fontSize: "80px"
+                }}
+            />
             {
                 isDragActive ?
-                    <p>Drop the files here ...</p> 
+                    <p>Drop the files here ...</p>
                     :
                     <p>Drag 'n' drop some files here, or click to select files</p>
             }
@@ -25,4 +43,4 @@ const MyDropzone: React.FC<Props> = ({ setFieldValue }) => {
     )
 }
 
-export default MyDropzone;
+export default Dropzone;

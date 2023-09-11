@@ -2,18 +2,22 @@
 import { useEffect, useState } from "react";
 import { getPost, addComment } from "api/index";
 import { useParams } from "react-router-dom";
-import { NewCommentType } from "types/interfaces";
+import { NewCommentType, PostType } from "types/interfaces";
+import PostBody from "./PostBody";
+import PostSlider from "./PostSlider";
+import Typography from '@mui/material/Typography';
 
 const Review: React.FC = () => {
     const params = useParams();
+    const [postData, setPostData] = useState<PostType | null>(null);
 
     useEffect(() => {
         const getPostById = async () => {
             try {
                 const response = await getPost(params.id)
                 const post = response.data;
+                setPostData(post.data);
 
-                console.log(post)
             } catch (err) {
 
             }
@@ -28,17 +32,17 @@ const Review: React.FC = () => {
         e.preventDefault();
 
         try {
-            if(params.id && comment.length > 0) {
+            if (params.id && comment.length > 0) {
 
                 const data: NewCommentType = {
                     content: comment,
                     postId: params.id
                 }
-    
+
                 const response = await addComment(data)
-                const post = response.data;
-    
-                console.log(post)
+                // const post = response.;
+
+                console.log(response)
             }
         } catch (err) {
 
@@ -52,12 +56,16 @@ const Review: React.FC = () => {
 
     return (
         <>
-            <img
-                src="https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141353.jpg"
-            />
-            <h2>title</h2>
-            <span>tags</span>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem harum hic consequatur ratione ab maxime nesciunt amet accusamus fuga cum illum quibusdam tempore, quia esse totam! Sit iste facilis explicabo?</p>
+            {
+                postData &&
+                <>
+                    <PostSlider postData={postData} />
+                    <Typography variant="h1" component="h1">
+                        {postData.postTitle}
+                    </Typography>
+                    <PostBody markdownContent={postData?.postContent} />
+                </>
+            }
 
             <form onSubmit={handleSubmit}>
                 <input

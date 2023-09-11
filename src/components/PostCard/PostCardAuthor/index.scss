@@ -1,0 +1,31 @@
+
+
+.PostCardAuthor {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border-radius: 48px;
+    padding: 8px 10px;
+}
+
+.PostCardAuthor__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.PostCardAuthor__name {
+    font-size: 14px;
+}
+
+
+.PostCard__score {
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+}

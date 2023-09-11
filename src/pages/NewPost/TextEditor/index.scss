@@ -1,0 +1,19 @@
+
+
+.TextEditor__wrapper {
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0px 2px 9px #c5c5c59c;
+}
+
+.TextEditor__editor {
+    min-height: 200px;
+    border: 1px solid #c5c5c59c;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.TextEditor__toolbar {
+    border: unset;
+    margin-bottom: 8px;
+}

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { PostType } from "types/interfaces";
 import Stack from '@mui/material/Stack';
 import PostCard from "components/PostCard";
+import "./index.scss";
+import Box from '@mui/material/Box';
 
 const Home: React.FC = () => {
     const [posts, setPosts] = useState<PostType[]>([]);
@@ -32,15 +34,15 @@ const Home: React.FC = () => {
     })
 
     return (
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px"
-        }}>
-            <Stack direction="row" spacing={2}>
-                {renderPosts}
-            </Stack>
-        </div>
+        <Box
+            sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                gap: "16px"
+            }}
+        >
+            {renderPosts}
+        </Box>
     )
 }
 

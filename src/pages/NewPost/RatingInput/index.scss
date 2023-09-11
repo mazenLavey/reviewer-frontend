@@ -1,0 +1,19 @@
+
+.RatingInput__wapper {
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    align-items: center;
+    gap: 24px;
+}
+
+.RatingInput {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+}
+
+.RatingInput__RatingBar {
+    width: 60px;
+    height: 60px;
+}
