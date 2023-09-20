@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const clientApi = axios.create({
-    baseURL: 'http://localhost:4000/api'
+    baseURL: 'https://reviewer-backend-r7pt.onrender.com/api'
 });
