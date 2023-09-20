@@ -1,7 +1,11 @@
 import Box from '@mui/material/Box';
 import { PostType } from 'types/interfaces';
-import { Swiper, SwiperSlide, SwiperProps } from 'swiper/react';
+import { ReactComponent as SliderNavBtn } from "./assets/slider-nav-btn.svg";
+import useMedia from 'hooks/useMedia';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
+import 'swiper/css/navigation';
 import './index.scss';
 
 type Props = {
@@ -9,9 +13,15 @@ type Props = {
 }
 
 const PostSlider: React.FC<Props> = ({ postData }) => {
+    const { isMobile } = useMedia()
     const sliderParams = {
-        spaceBetween: 12,
-        slidesPerView: postData?.mediaFiles?.length > 1 ? 1.3 : 1
+        spaceBetween: 6,
+        slidesPerView: postData?.mediaFiles?.length > 1 ? 1.2 : 1,
+        modules: [Navigation],
+        navigation: {
+            prevEl: '.PostSlider__Prev',
+            nextEl: '.PostSlider__Next',
+        },
     }
 
     const renderImgs = postData?.mediaFiles?.map((el, index) => {
@@ -28,14 +38,36 @@ const PostSlider: React.FC<Props> = ({ postData }) => {
 
     return (
         <Box
-            className="PostSlider"
+            sx={{
+                position: "relative"
+            }}
         >
-            <Swiper
-                className='PostSlider__swiper-custom'
-                {...sliderParams}
+            <Box
+                sx={{
+                    width: "100%",
+                    aspectRatio: " 16 / 9",
+                    borderRadius: isMobile ? "16px" : "32px",
+                    overflow: "hidden",
+                }}
             >
-                {renderImgs}
-            </Swiper>
+                <Swiper
+                    className='PostSlider__swiper-custom'
+                    {...sliderParams}
+                >
+                    {renderImgs}
+                </Swiper>
+            </Box>
+            {
+                !isMobile &&
+                <>
+                    <div className="PostSlider__Prev" >
+                        <SliderNavBtn />
+                    </div>
+                    <div className="PostSlider__Next">
+                        <SliderNavBtn />
+                    </div>
+                </>
+            }
         </Box>
     )
 }

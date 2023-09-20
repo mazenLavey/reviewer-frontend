@@ -1,18 +1,34 @@
 import { useNavigate } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
-import StarsIcon from '@mui/icons-material/Stars';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 import routes from 'routes';
 
 const Logo: React.FC = () => {
+    const { palette } = useTheme();
+
     const navigate = useNavigate();
 
+    const handleClick = () => {
+        navigate(routes.home)
+    }
+
     return (
-        <IconButton
-            aria-label="share"
-            onClick={() => navigate(routes.home)}
+        <Typography
+            variant="h4"
+            component="h1"
+            sx={{
+                fontFamily: "sans-serif",
+                cursor: "pointer",
+                fontWeight: "700",
+                color: palette.text.primary,
+                ":hover": {
+                    opacity: "0.5"
+                }
+            }}
+            onClick={handleClick}
         >
-            <StarsIcon />
-        </IconButton>
+            R
+        </Typography>
     )
 }
 

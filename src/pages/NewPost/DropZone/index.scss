@@ -1,11 +1,9 @@
 .Dropzone {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    height: 300px;
     width: 100%;
+    min-height: 200px;
     border-radius: 32px;
     padding: 16px;
     background-color: #eef7ff;
@@ -16,5 +14,9 @@
 
     &--active {
         opacity: 0.5;
+    }
+
+    &--error {
+        border-color: red;
     }
 }

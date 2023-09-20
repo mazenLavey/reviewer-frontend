@@ -1,7 +1,4 @@
 
-
-
-
 export interface UserType {
     readonly id: string,
     readonly createdAt: string,
@@ -19,9 +16,14 @@ export interface RegisterNewUserType extends Pick<UserType, 'userName' | 'userEm
 
 export interface CommentType {
     readonly createdAt: string,
-    authorId: string,
+    readonly _id: string,
+    author: {
+        _id: string,
+        userName: string
+    },
     content: string,
 }
+
 
 export interface NewCommentType extends Pick<CommentType, 'content'> {
     postId: string,
@@ -52,17 +54,17 @@ export interface PostType {
         readonly _id: string
     },
     likes: string[],
-    comments: NewCommentType[]
+    comments: CommentType[]
 }
 
 export interface NewPostType extends Pick<PostType,
     "postTitle"
     | "postSummary"
-    | "mediaFiles"
     | "postContent"
     | "postGroup"
     | "postRate"
 > { 
-    postTags: string[]
+    postTags: string[],
+    mediaFiles: File[],
 }
 

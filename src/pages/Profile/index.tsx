@@ -1,38 +1,29 @@
-
-
-import { getUserPosts } from 'api/index';
 import { useEffect, useState } from 'react';
+import { getUserPosts } from 'api/index';
 import { PostType } from 'types/interfaces';
-
+import PostsTable from './PostsTable';
 
 const Profile: React.FC = () => {
-    const [userPost, setUserPost] = useState<PostType[]>([]);
+    const [userPosts, setUserPosts] = useState<PostType[]>([]);
 
     useEffect(() => {
         const getPosts = async () => {
             try {
                 const response = await getUserPosts();
-                const data = response.data
-                console.log(data)
-                setUserPost(data.data)
+                const data = response.data;
+                setUserPosts(data.data)
+                
             } catch (err) {
 
             }
         }
-
         getPosts()
     }, []);
 
-    const renderPosts = userPost?.map(post => {
-        return(
-            <div>
-                {post.postTitle}
-            </div>
-        )
-    })
+
     return (
         <div>
-            {renderPosts}
+            <PostsTable postsData={userPosts}/>
         </div>
     )
 }

@@ -27,10 +27,6 @@ const SearchBar: React.FC = () => {
                 gap: "16px"
             }}
         >
-            <IconButton aria-label="share">
-                <SearchIcon />
-            </IconButton>
-
             <Autocomplete
                 sx={{
                     "MuiOutlinedInput-notchedOutline": {

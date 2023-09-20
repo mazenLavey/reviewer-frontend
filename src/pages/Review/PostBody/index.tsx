@@ -1,15 +1,25 @@
 import React from 'react';
 import { parse } from 'marked';
+import Typography from '@mui/material/Typography';
+import './index.scss';
 
 type Props = {
     markdownContent: string
 }
 
 const PostBody: React.FC<Props> = ({ markdownContent }) => {
-    const htmlContent = parse(markdownContent);
+    const htmlContent = parse(JSON.parse(markdownContent));
+
 
     return (
-        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+        <Typography
+            component="div"
+        >
+            <div
+                className='PostBody'
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+            />
+        </Typography>
     );
 }
 

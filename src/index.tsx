@@ -1,22 +1,20 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { ThemeProvider } from '@mui/material/styles';
-import customizedTheme from 'styles/customizedTheme';
 import { AuthProvider } from 'react-auth-kit';
+import { ModeProvider } from 'context/ModeContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-    <AuthProvider
-      authType={'cookie'}
-      authName={'_auth'}
-      cookieDomain={window.location.hostname}
-      cookieSecure={false}
-    >
-      <ThemeProvider theme={customizedTheme}>
-        <App />
-      </ThemeProvider>
-    </AuthProvider>
+  <AuthProvider
+    authType={'cookie'}
+    authName={'_auth'}
+    cookieDomain={window.location.hostname}
+    cookieSecure={false}
+  >
+    <ModeProvider>
+      <App />
+    </ModeProvider>
+  </AuthProvider>
 );

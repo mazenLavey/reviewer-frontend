@@ -1,11 +1,15 @@
 import RegisterForm from './RegisterForm';
+import AccessGateway from "components/AccessGateway";
 
 const Register: React.FC = () => {
 
     return (
-        <div>
+        <AccessGateway
+            title="Sign up"
+            type='signup'
+        >
             <RegisterForm />
-        </div>
+        </AccessGateway>
     )
 }
 

@@ -2,6 +2,11 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 import { PostType } from 'types/interfaces';
 import { addLike, deleteLike } from 'api/index';
+import { io } from 'socket.io-client';
+import { useEffect } from 'react';
+
+
+const socket = io('http://localhost:4000');
 
 type Props = {
     postData: PostType,
@@ -10,9 +15,7 @@ type Props = {
 const LikeBtn: React.FC<Props> = ({ postData }) => {
     const isLiked = postData?.likes?.find(likeId => likeId === postData.author._id);
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-
+    const handleClick = () => {
         if (isLiked) {
             decrementLike(postData._id)
         } else {
@@ -21,13 +24,14 @@ const LikeBtn: React.FC<Props> = ({ postData }) => {
     }
 
     const incrementLike = async (postId: string) => {
+
         try {
             const data = {
                 postId,
             }
 
             const response = await addLike(data);
-
+            socket.emit('send_like');
         } catch (err: any) {
             console.log(err.message)
         }
@@ -37,11 +41,18 @@ const LikeBtn: React.FC<Props> = ({ postData }) => {
         try {
 
             const response = await deleteLike(postId);
-
+            socket.emit('send_like');
         } catch (err: any) {
             console.log(err.message)
         }
     }
+
+    useEffect(() => {
+        socket.on("receive_like", (data) => {
+            console.log(data.data)
+        });
+
+    }, [socket])
 
     return (
         <span>

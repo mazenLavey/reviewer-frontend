@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import classNames from "classnames";
+import { useTheme } from '@mui/material/styles';
 import './index.scss';
 
 type Props = {
@@ -18,6 +19,8 @@ const CircularRatingBar: React.FC<Props> = ({
     className,
 }) => {
 
+    const { palette } = useTheme();
+
     return (
         <Box className={classNames(className, {
             "CircularRatingBar": true,
@@ -28,7 +31,8 @@ const CircularRatingBar: React.FC<Props> = ({
                 maxValue={maxValue}
                 text={`${value}`}
                 styles={buildStyles({
-                    pathColor: "red",
+                    pathColor: palette.primary.main,
+                    textColor: palette.text.primary,
                     textSize: "32px",
                 })}
             />

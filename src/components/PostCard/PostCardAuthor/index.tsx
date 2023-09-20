@@ -1,37 +1,47 @@
-import Avatar from '@mui/material/Avatar';
-import { red } from '@mui/material/colors';
+import UserAvatar from 'components/UserAvatar';
 import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
 import './index.scss';
 
 type Props = {
     author: string,
-    createdAt: string
 }
 
 const PostCardAuthor: React.FC<Props> = ({
     author,
-    createdAt
 }) => {
 
     return (
         <div className='PostCardAuthor'>
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
-            </Avatar>
-            <div className='PostCardAuthor__info'>
-                <Rating
-                    name="read-only"
+
+            <UserAvatar name={author}/>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column"
+                }}
+            >
+                {/* <Rating
+                    name="user-rate"
                     value={4}
-                    readOnly
-                    sx={{
-                        marginLeft: "auto"
-                    }}
                     size='small'
-                />
-                <span className='PostCardAuthor__name'>
+                    readOnly
+                /> */}
+                <Box
+                    sx={{
+                        fontSize: "12px",
+                        textTransform: "capitalize",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        width: "fit-content",
+                        maxWidth: "120px",
+                        color:"#333"
+                    }}
+                >
                     {author}
-                </span>
-            </div>
+                </Box>
+            </Box>
         </div>
     )
 }

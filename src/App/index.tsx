@@ -1,3 +1,5 @@
+import { ModeContext } from 'context/ModeContext';
+import { useContext } from "react";
 import { Navigate, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import RootLayout from 'layouts/RootLayout';
 import Home from 'pages/Home';
@@ -9,6 +11,8 @@ import Register from 'pages/Register';
 import NewPost from 'pages/NewPost';
 import ProtectedRoute from 'components/ProtectedRoute';
 import routes from 'routes';
+import { ThemeProvider } from '@mui/material/styles';
+import { lightTheme, darkTheme } from 'styles/customizedTheme';
 import 'normalize.css';
 import './index.scss';
 
@@ -35,12 +39,16 @@ const App: React.FC = () => {
         <Route path='*' element={<Navigate to={routes.home} replace />} />
       </Route>
     )
-  )
+  );
+
+  const { isDarkMode } = useContext(ModeContext);
 
   return (
-    <div className="App">
+    <ThemeProvider
+      theme={isDarkMode ? darkTheme : lightTheme}
+    >
       <RouterProvider router={router} />
-    </div>
+    </ThemeProvider>
   );
 }
 

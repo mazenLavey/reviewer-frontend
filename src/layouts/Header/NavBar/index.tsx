@@ -1,15 +1,15 @@
 import Button from '@mui/material/Button';
-import { useIsAuthenticated } from 'react-auth-kit';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Stack from '@mui/material/Stack';
 import routes from 'routes';
+import Stack from '@mui/material/Stack';
 import { useSignOut } from 'react-auth-kit'
 
-const NavBar: React.FC = () => {
-    const navigate = useNavigate();
+type Props = {
+    isAuth: boolean
+}
 
-    const authentication = useIsAuthenticated();
-    const isAuth = authentication();
+const NavBar: React.FC<Props> = ({ isAuth }) => {
+    const navigate = useNavigate();
 
     const signOut = useSignOut();
 
@@ -20,18 +20,21 @@ const NavBar: React.FC = () => {
     }
 
     return (
-        <Stack direction={"row"} spacing={2}>
+        <Stack direction={"row"} spacing={2} alignItems="center">
             {isAuth ?
                 <>
-                    <NavLink to={routes.newPost}>
-                        <Button variant="contained">new post</Button>
+                    <NavLink
+                        to={routes.newPost}
+                    >
+                        <Button
+                            variant="contained"
+                        >
+                            +&nbsp;post
+                        </Button>
                     </NavLink>
 
-                    <NavLink to={routes.profile}>
-                        <Button variant="contained">profile</Button>
-                    </NavLink>
                     <Button
-                        variant="contained"
+                        variant="outlined"
                         onClick={handleClick}
                     >
                         log&nbsp;out

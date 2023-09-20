@@ -1,10 +1,9 @@
 import { getAllPosts } from "api/index";
 import { useEffect, useState } from "react";
 import { PostType } from "types/interfaces";
-import Stack from '@mui/material/Stack';
 import PostCard from "components/PostCard";
-import "./index.scss";
 import Box from '@mui/material/Box';
+import "./index.scss";
 
 const Home: React.FC = () => {
     const [posts, setPosts] = useState<PostType[]>([]);

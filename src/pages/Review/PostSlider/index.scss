@@ -1,12 +1,4 @@
 
-
-.PostSlider {
-    width: 100%;
-    height: 500px;
-    border-radius: 32px;
-    overflow: hidden;
-}
-
 .PostSlider__swiper-custom {
     height: 100%;
 }
@@ -15,4 +7,38 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.PostSlider__Next,
+.PostSlider__Prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+
+    &>svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    &.swiper-button-disabled {
+        display: none;
+    }
+}
+
+.PostSlider__Prev {
+    left: -25px;
+    rotate: 180deg;
+    transform-origin: top;
+}
+
+.PostSlider__Next {
+    right: -25px;
 }

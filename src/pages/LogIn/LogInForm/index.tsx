@@ -1,26 +1,19 @@
-import {useState} from 'react';
-import IconButton from '@mui/material/IconButton';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Button from '@mui/material/Button';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { useToggle } from 'react-use';
 import { LogInUserType } from 'types/interfaces';
 import { logInSchema } from 'schema/logInSchema';
 import { toastNotifications } from 'components/Toastify';
 import { logIn } from 'api';
 import { useSignIn } from 'react-auth-kit'
-import { useNavigate } from 'react-router-dom';
-import LoadingBackDrop from 'components/LoadingBackDrop';
 import routes from 'routes';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import ErrorMessage from 'components/ErrorMessage';
 
 const LogInForm: React.FC = () => {
-    const [showPassword, toggle] = useToggle(false);
     const [isLoading, setLoading] = useState<boolean>(false);
 
     const signIn = useSignIn();
@@ -50,6 +43,7 @@ const LogInForm: React.FC = () => {
                 })
 
                 navigate(routes.home);
+                actions.resetForm()
                 setLoading(false)
                 toastNotifications.success(data.message)
             } catch (error: any) {
@@ -63,10 +57,17 @@ const LogInForm: React.FC = () => {
     const passwordIsError = !!errors.userPassword && !!touched.userPassword;
 
     return (
-        <>
-        <form onSubmit={handleSubmit}>
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "16px",
+                width: "100%",
+            }}
+        >
             <TextField
-                variant="outlined"
                 id="userEmail"
                 name="userEmail"
                 label="Your Email"
@@ -75,44 +76,30 @@ const LogInForm: React.FC = () => {
                 value={values.userEmail}
                 error={emailIsError}
             />
-            {emailIsError && <p>{errors.userEmail}</p>}
+            {emailIsError && <ErrorMessage message={errors.userEmail} />}
 
-            <FormControl variant="outlined">
-                <InputLabel htmlFor="userPassword">Your Password</InputLabel>
-                <OutlinedInput
-                    id="userPassword"
-                    name="userPassword"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.userPassword}
-                    error={passwordIsError}
-                    type={showPassword ? 'text' : 'password'}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={toggle}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                    label="Your Password"
-                />
-            </FormControl>
-            {passwordIsError && <p>{errors.userPassword}</p>}
+            <TextField
+                label="Password"
+                type="password"
+                id="userPassword"
+                name="userPassword"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.userPassword}
+                error={passwordIsError}
+            />
+            {passwordIsError && <ErrorMessage message={errors.userPassword} />}
 
             <Button
                 variant="contained"
                 type='submit'
                 fullWidth
+                disabled={isLoading}
+                endIcon={isLoading && <CircularProgress size={20} />}
             >
-                log&nbsp;in
+                Sign In
             </Button>
-        </form >
-        <LoadingBackDrop isActive={isLoading} />
-        </>
+        </Box>
     )
 }
 

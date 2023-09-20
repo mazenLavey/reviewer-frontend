@@ -13,6 +13,10 @@ export const newPost = (data) => {
   return clientApi.post('/post', data, { withCredentials: true })
 }
 
+export const deletePost = (postId) => {
+  return clientApi.delete(`/post/${postId}`, { withCredentials: true })
+}
+
 export const getAllPosts = () => {
   return clientApi.get('/post')
 }

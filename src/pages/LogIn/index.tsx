@@ -1,13 +1,15 @@
+import AccessGateway from "components/AccessGateway";
 import LogInForm from "./LogInForm";
-
-
 
 const LogIn: React.FC = () => {
 
     return (
-        <div>
+        <AccessGateway
+            title="Sign in"
+            type="signin"
+        >
             <LogInForm />
-        </div>
+        </AccessGateway>
     )
 }
 

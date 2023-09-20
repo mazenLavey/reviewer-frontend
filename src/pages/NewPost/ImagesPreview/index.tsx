@@ -1,29 +1,29 @@
 import Box from '@mui/material/Box';
-import { NewPostType } from 'types/interfaces';
 import CancelIcon from '@mui/icons-material/Cancel';
 import './index.scss';
 
 type Props = {
-    values: NewPostType,
+    mediaFiles: File[],
     setFieldValue: (field: string, value: any) => void
 }
 
 const ImagesPreview: React.FC<Props> = ({
-    values,
+    mediaFiles,
     setFieldValue
 }) => {
 
     const handleClick = (value: string) => {
-        const updatedMediaFiles = values?.mediaFiles?.filter((file: any) => file.name !== value)
+        const updatedMediaFiles = mediaFiles?.filter((file: any) => file.name !== value)
         setFieldValue("mediaFiles", updatedMediaFiles)
     }
 
-    const renderImages = values?.mediaFiles?.map((file: any) => {
+    const renderImages = mediaFiles?.map((file: any) => {
         return (
             <Box
                 key={file.name}
                 sx={{
-                    position: "relative"
+                    position: "relative",
+                    aspectRatio: "16 / 9",
                 }}
             >
                 <CancelIcon

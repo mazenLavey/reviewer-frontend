@@ -1,9 +1,15 @@
+.Editor {
+    border: 1px solid transparent;
+    border-radius: 16px;
+    box-shadow: 0px 2px 9px #c5c5c59c;
 
+    &--error {
+        border-color: red;
+    }
+}
 
 .TextEditor__wrapper {
-    border-radius: 16px;
     padding: 16px;
-    box-shadow: 0px 2px 9px #c5c5c59c;
 }
 
 .TextEditor__editor {
