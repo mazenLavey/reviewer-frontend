@@ -103,7 +103,7 @@ const NewPost: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={postSummaryIsError}
-                helperText={`${values?.postSummary?.length} / 100`}
+                helperText={`${values?.postSummary?.length} / 300`}
                 rows={2}
                 multiline
             />

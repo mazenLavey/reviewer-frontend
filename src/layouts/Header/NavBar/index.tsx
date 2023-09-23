@@ -5,10 +5,13 @@ import Stack from '@mui/material/Stack';
 import { useSignOut } from 'react-auth-kit'
 
 type Props = {
-    isAuth: boolean
+    isAuth: boolean,
+    direction: "column" | "row"
 }
 
-const NavBar: React.FC<Props> = ({ isAuth }) => {
+const btnWidth = "100px";
+
+const NavBar: React.FC<Props> = ({ isAuth, direction }) => {
     const navigate = useNavigate();
 
     const signOut = useSignOut();
@@ -20,7 +23,7 @@ const NavBar: React.FC<Props> = ({ isAuth }) => {
     }
 
     return (
-        <Stack direction={"row"} spacing={2} alignItems="center">
+        <Stack direction={direction} spacing={2} alignItems="center">
             {isAuth ?
                 <>
                     <NavLink
@@ -28,6 +31,9 @@ const NavBar: React.FC<Props> = ({ isAuth }) => {
                     >
                         <Button
                             variant="contained"
+                            sx={{
+                                width: btnWidth
+                            }}
                         >
                             +&nbsp;post
                         </Button>
@@ -36,6 +42,9 @@ const NavBar: React.FC<Props> = ({ isAuth }) => {
                     <Button
                         variant="outlined"
                         onClick={handleClick}
+                        sx={{
+                            width: btnWidth
+                        }}
                     >
                         log&nbsp;out
                     </Button>
@@ -45,6 +54,9 @@ const NavBar: React.FC<Props> = ({ isAuth }) => {
                     <NavLink to={routes.login}>
                         <Button
                             variant="outlined"
+                            sx={{
+                                width: btnWidth
+                            }}
                         >
                             log&nbsp;in
                         </Button>
@@ -52,6 +64,9 @@ const NavBar: React.FC<Props> = ({ isAuth }) => {
                     <NavLink to={routes.register}>
                         <Button
                             variant="contained"
+                            sx={{
+                                width: btnWidth
+                            }}
                         >
                             Sign&nbsp;up
                         </Button>

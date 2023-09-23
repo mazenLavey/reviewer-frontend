@@ -9,7 +9,7 @@ export const NewPostSchema = yup.object<NewPostType>({
         .required('Post title is required'),
     postSummary: yup
         .string()
-        .max(100, 'Post summary should not exceed 100 characters')
+        .max(300, 'Post summary should not exceed 300 characters')
         .required('Post summary is required'),
     postContent: yup.string().required('Post content is required'),
     postGroup: yup
